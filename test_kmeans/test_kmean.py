@@ -67,6 +67,7 @@ class TestKMeans(unittest.TestCase):
         x3 = np.random.normal(size=(100, 2))
         x3 += np.array([0, 5])
         x_train = np.vstack((x1, x2, x3))
+        log.debug('initialize data successful')
         kmeans = KMeans(3, log)
         kmeans.fit(x_train)
         cluster = kmeans.predict(x_train)
