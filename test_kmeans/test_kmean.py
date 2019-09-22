@@ -35,13 +35,14 @@ class KMeans(object):
 
         for i in range(iter_max):
             prev_centers = np.copy(centers)
+            # m * cluster_numbers
             euclidean_dist = self.cal_euclidean_distance(centers, train_data)
-
             # find cluster index by euclidean distance E-step
+            # m * 1
             cluster_index = np.argmin(euclidean_dist, axis=1)
             # binary indicator variables -> Rnk
+            # m * 3
             cluster_index = I[cluster_index]
-
             # M-step Rnk * Train / Rnk
             # cluster_index m*3*1  train_data m*1*2 => m * 3 * 2 => sum axis=0
             # => 3*2 => / sum(m*3*1, axis=0) 3*1 => 3*2
@@ -130,7 +131,7 @@ class TestKmeanPP(unittest.TestCase):
         plt.scatter(x_train[:, 0], x_train[:, 1], c=cluster)
         plt.scatter(kpp.centers[:, 0], kpp.centers[:, 1], s=200, marker='X', lw=2, c=['purple', 'cyan', 'yellow'],
                     edgecolor="white")
-        plt.show()
+        # plt.show()
 
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
