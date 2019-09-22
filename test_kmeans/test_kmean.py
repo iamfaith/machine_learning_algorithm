@@ -88,7 +88,7 @@ class KMeansPP(KMeans):
             r = random.random()
             chosen = train_data[cumprobs >= r][0]
             centers.append(chosen)
-        print(centers)
+        # print(centers)
         return centers
 
 
@@ -131,7 +131,7 @@ class TestKmeanPP(unittest.TestCase):
         plt.scatter(x_train[:, 0], x_train[:, 1], c=cluster)
         plt.scatter(kpp.centers[:, 0], kpp.centers[:, 1], s=200, marker='X', lw=2, c=['purple', 'cyan', 'yellow'],
                     edgecolor="white")
-        # plt.show()
+        plt.show()
 
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
