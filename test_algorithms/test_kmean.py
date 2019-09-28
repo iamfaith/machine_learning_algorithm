@@ -15,13 +15,16 @@ class KMeans(object):
     Use k-means++
     """
 
-    def __init__(self, k, log):
+    def __init__(self, k, log=None):
         """
         :param k: suppose for the moment that the value of K is given
         """
         self.cluster_nums = k
-        self.output = log
-        self.debug = self.output.debug
+        if log is not None:
+            self.output = log
+            self.debug = self.output.debug
+        else:
+            self.debug = print
         self.centers = []
 
     def center_initialization(self, train_data):
