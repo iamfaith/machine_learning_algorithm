@@ -18,9 +18,18 @@ class AGGM_EM(object):
         self.X = X
         self.cluster_num, self.dim = centers.shape
         self.mean = centers
-        cov = [np.std(X[:, i]) for i in range(self.dim)]
+
+        cov = []
+        for center in centers:
+            temp_cov = np.sqrt(np.sum((X - center)** 2, axis=0) / (self.X.shape[0] - 1))
+            print(temp_cov)
+            cov.append(temp_cov)
+        cov = np.asarray(cov)
+        print(cov)
+        # cov = [np.std(X[:, i]) for i in range(self.dim)]
         #         print(np.std(X[:,0]), np.std(X[:,1]), [np.std(X[:,i]) for i in range(self.dim)])
-        self.sigma_l = self.sigma_r = np.array([cov for _ in range(self.cluster_num)])
+        # self.sigma_l = self.sigma_r = np.array([cov for _ in range(self.cluster_num)])
+        self.sigma_l = self.sigma_r = cov
         self.coef = np.ones(self.cluster_num) / 3
         self.beta = np.array([[2 for _ in range(self.dim)] for _ in range(self.cluster_num)])
         #         self.beta = np.ones(self.cluster_num) * 2
@@ -64,9 +73,9 @@ class AGGM_EM(object):
                                                                    self.sigma_r[i], self.beta[i])
                 temp_likelihood = likelihood[0] * likelihood[1]
                 if temp_likelihood < 0:
-                    print(self.X[j], self.mean[i], self.sigma_l[i],
+                    print("-------temp_likelihood",self.X[j], self.mean[i], self.sigma_l[i],
                           self.sigma_r[i], self.beta[i])
-                    pdb.set_trace()
+                    # pdb.set_trace()
                 likelihoods.append(temp_likelihood)
             #                 print(likelihood[0] * likelihood[1], np.dot(likelihood , likelihood.T))
             #                 print(i, j, likelihood)
